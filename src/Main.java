@@ -2,7 +2,7 @@ void main () {
 
     Scanner sc = new Scanner(System.in);
     List<contaBancaria> contas = new ArrayList<>();
-    Menu menu = new Menu();
+    Menu menu = new Menu(contas);
 
     int opcao = -1;
 
@@ -20,9 +20,6 @@ void main () {
 
             case 1:
                 menu.adicionarConta();
-
-                contas.add(new contaBancaria(numeroConta, titular, saldo));
-                break;
 
             case 2:
                 for (contaBancaria mostrarContas : contas) {

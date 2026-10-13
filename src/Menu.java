@@ -1,4 +1,12 @@
+import java.util.List;
+
 public class Menu {
+
+    private List<contaBancaria> contas;
+
+    public Menu(List<contaBancaria> contas) {
+        this.contas = contas;
+    }
 
     public void menuPrincipal() {
         System.out.println("""
@@ -21,11 +29,12 @@ public class Menu {
     //Opcao 1
     public void adicionarConta() {
 
-        int numeroConta = Integer.parseInt(IO.readln());
+        int numeroConta = Integer.parseInt(IO.readln("Qual o número da conta?"));
 
         String titular = (IO.readln("Qual o titular?"));
 
         double saldo = Double.parseDouble(IO.readln("Qual o saldo?"));
+        contas.add(new contaBancaria(numeroConta, titular, saldo));
 
     }
 }
