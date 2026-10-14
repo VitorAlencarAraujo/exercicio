@@ -20,82 +20,66 @@ void main () {
 
             case 1:
                 menu.adicionarConta();
+                break;
 
             case 2:
-                for (contaBancaria mostrarContas : contas) {
-                    System.out.println(mostrarContas.toString());
-                }
+                menu.verContas();
                 break;
 
             case 3:
-                System.out.println("Contas disponiveis:");
+                menu.entrarConta();
 
-                for (contaBancaria mostrarContas : contas) {
-                    System.out.println(mostrarContas.toString());
-                }
+                //Boas Vindas a conta entrada
+                System.out.println("olá " + contaEntrada.getTitular() + " O que deseja fazer?");
 
-                System.out.println("Em qual conta você deseja entrar?");
-                System.out.println("Número da conta:");
+                int opcaoConta = -1;
+                while (opcaoConta != 0) {
+                    System.out.print("""
+                            1. depositar dinheiro
+                            2. sacar dinheiro
+                            3. trasferir dinheiro
+                            0. Sair da conta""");
 
-                int numeroBuscado = sc.nextInt();
+                    opcaoConta = Integer.parseInt(IO.readln());
+                    switch (opcaoConta) {
 
-                for (contaBancaria contaEntrada : contas) {
-                    if (numeroBuscado == contaEntrada.getNumero()) {
-                        System.out.println("olá " + contaEntrada.getTitular() + " O que deseja fazer?");
+                        case 0:
+                            System.out.println("Saindo da conta...");
+                            break;
 
-                        int opcaoConta = -1;
-                        while (opcaoConta != 0) {
-                            System.out.println("""
-                                    1. depositar dinheiro 
-                                    2. sacar dinheiro
-                                    3. trasferir dinheiro
-                                    0. Sair da conta""");
+                        case 1:
+                            double valorDeposito = Double.parseDouble(IO.readln("Quanto você deseja depositar?"));
 
-                            opcaoConta = sc.nextInt();
-                            switch (opcaoConta) {
+                            contaEntrada.depositar(valorDeposito);
+                            System.out.println("Deposito realizado! \nnovo saldo " + contaEntrada.getSaldo());
+                            break;
 
-                                case 0:
-                                    System.out.println("Saindo da conta...");
-                                    break;
+                        case 2:
+                            double valorSaque = Double.parseDouble(IO.readln("Quanto você deseja sacar?"));
+                            contaEntrada.sacar(valorSaque);
 
-                                case 1:
-                                    System.out.println("Quanto você deseja depositar?");
-                                    double valorDeposito = sc.nextDouble();
+                            System.out.println("Saque realizado! novo saldo" + contaEntrada.getSaldo());
+                            break;
 
-                                    contaEntrada.depositar(valorDeposito);
-                                    System.out.println("Deposito realizado! \nnovo saldo " + contaEntrada.getSaldo());
-                                    break;
-
-                                case 2:
-                                    System.out.println("Quanto você deseja sacar?");
-                                    double valorSaque = sc.nextDouble();
-
-                                    System.out.println("Saque realizado! novo saldo" + contaEntrada.getSaldo());
-                                    break;
-
-                                case 3:
-                                    System.out.println("Contas disponiveis:");
-                                    for (contaBancaria mostrarContas : contas) {
-                                        System.out.println(mostrarContas.toString());
-                                    }
-
-                                    System.out.println("Para qual conta você deseja transferir? Informe o numero da conta:");
-                                    int numeroParaTransferencia = sc.nextInt();
-
-                                    for (contaBancaria contaParaTransferencia : contas){
-                                        if (numeroParaTransferencia == contaParaTransferencia.getNumero()){
-                                            System.out.println("Quanto você deseja transferir? ");
-                                            double valorParaTransferencia = sc.nextDouble();
-
-                                            contaEntrada.transferir(valorParaTransferencia);
-                                            contaParaTransferencia.receberTransferencia(valorParaTransferencia);
-
-                                            System.out.println("Transferencia realizada! Novo saldo: " + contaEntrada.getSaldo());
-                                        }
-                                    }
-                                    break;
+                        case 3:
+                            System.out.println("Contas disponiveis:");
+                            for (contaBancaria mostrarContas : contas) {
+                                System.out.println(mostrarContas.toString());
                             }
-                        }
+
+                            int numeroParaTransferencia = Integer.parseInt(IO.readln("Para qual conta você deseja transferir? Informe o numero da conta:"));
+
+                            for (contaBancaria contaParaTransferencia : contas){
+                                if (numeroParaTransferencia == contaParaTransferencia.getNumero()){
+                                    double valorParaTransferencia = Double.parseDouble(IO.readln("Quanto você deseja transferir?"));
+
+                                    contaEntrada.transferir(valorParaTransferencia);
+                                    contaParaTransferencia.receberTransferencia(valorParaTransferencia);
+
+                                    System.out.println("Transferencia realizada! Novo saldo: " + contaEntrada.getSaldo());
+                                }
+                            }
+                            break;
                     }
                 }
         }
